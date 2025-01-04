@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Книга</title>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8);
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+
+            50% {
+                background: rgba(255, 179, 132, 0.8);
+            }
+
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            z-index: 1;
+            margin-top: 100px;
+        }
+
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(51, 51, 51, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        .left-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-icon,
+        .home-icon {
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+        }
+
+        
+        .center-buttons button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .center-buttons button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 25px;
+            border: 2px solid white;
+        }
+
+        
+        .book-detail {
+            display: flex;
+            align-items: flex-start; 
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            margin-top: 100px;
+            gap: 30px;
+            flex-direction: row; 
+            position: relative;
+        }
+
+        
+        .book-image {
+            max-width: 300px;
+            max-height: 450px;
+            object-fit: cover;
+            flex-shrink: 0; 
+        }
+
+        
+        .book-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; 
+            flex: 1; 
+            height: 100%; 
+        }
+
+        .book-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .book-author {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .book-description {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .book-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .book-date {
+            font-size: 14px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        
+        .book-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 200px;
+            margin-bottom: 0; 
+        }
+
+        .book-buttons button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            width: 48%;
+        }
+
+        .book-buttons button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        .nav-bar-button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-right: 20px; 
+        }
+
+        .nav-bar-button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        
+        #notifications-container {
+            position: fixed;
+            top: 20px;  
+            left: 50%;
+            transform: translateX(-50%);  
+            width: 80%;
+            max-width: 400px;
+            z-index: 20;  
+        }
+
+        
+        .notification {
+            background-color: rgba(106, 79, 187, 0.9);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            text-align: center;
+            margin-bottom: 10px;  
+        }
+
+        .notification.success {
+            background-color: rgba(138, 90, 243, 0.9); 
+        }
+
+        .notification.error {
+            background-color: rgba(255, 79, 79, 0.9); 
+        }
+
+        .cart-button {
+            display: flex;
+            align-items: center; 
+            justify-content: space-between; 
+            padding: 5px 10px; 
+            border: 1px solid #ccc; 
+            background-color: #f9f9f9; 
+            cursor: pointer; 
+        }
+
+        .cart-decrement,
+        .cart-increment {
+            cursor: pointer;
+        }
+
+        .cart-quantity {
+            margin: 0 10px;
+        }
+        
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <div class="nav-bar">
+        <div class="left-icons">
+            <div class="back-icon" onclick="window.history.back();">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="home-icon" onclick="window.location.href='/main/';">
+                <i class="fas fa-home"></i>
+            </div>
+        </div>
+        <div class="center-buttons">
+            <button id="categories-btn" onclick="window.location.href='/categories';">Категории</button>
+            <button id="delivery-btn">Доставка</button>
+            <button id="cart-btn" onclick="window.location.href='/cart';">Корзина</button>
+        </div>
+        <div class="profile">
+            {% if user.is_authenticated %}
+                <a href="/user/{{ user.id }}">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Picture">
+                </a>
+            {% else %}
+                <a href="/auth/login/">
+                    <button class="nav-bar-button">Войти</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="book-detail">
+            <img src="{{ book.image }}" alt="{{ book.title }}" class="book-image">
+
+            <div class="book-info">
+                <div class="book-title">{{ book.title }}</div>
+                <div class="book-author">Автор: {{ book.author }}</div>
+                <div class="book-description">{{ book.description }}</div>
+                <div class="book-price">{{ book.price }} ₽</div>
+                <div class="book-date">Дата выхода: {{ book.date }}</div>
+                
+                <div class="book-buttons">
+                    {% if cart_item %}
+                        <button id="cart-btn-{{ book.id }}" class="cart-button">
+                            <span class="cart-decrement" onclick="updateCart('{{ book.id }}', 'decrement')">-</span>
+                            <span id="cart-quantity-{{ book.id }}" class="cart-quantity">{{ cart_item.quantity }}</span>
+                            <span class="cart-increment" onclick="updateCart('{{ book.id }}', 'increment')">+</span>
+                        </button>
+                    {% else %}
+                        <button onclick="addToCart('{{ book.id }}')">Добавить в корзину</button>
+                    {% endif %}
+                    <button onclick="shareBook('{{book.id}}', '{{category.id}}')">Поделиться</button>
+                </div>                
+            </div>
+        </div>
+
+        <div id="notifications-container"></div>
+    </div>
+
+    <script>
+        function addToCart(productId) {
+            fetch(`/api/categories/add-to-cart/${productId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ quantity: 1 }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка добавления товара в корзину');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.existing) {
+                    document.getElementById(`cart-quantity-${productId}`).textContent = data.quantity;
+                } else {
+                    location.reload();
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
+        };
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        };
+
+        function updateCart(productId, action) {
+            const button = document.getElementById(`cart-btn-${productId}`);
+            button.disabled = true;
+
+            fetch(`/api/cart/update/${productId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({ action: action }),
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ошибка обновления количества книг в корзине');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.quantity === 0) {
+                    button.outerHTML = `<button onclick="addToCart('${productId}')">Добавить в корзину</button>`;
+                } else {
+                    document.getElementById(`cart-quantity-${productId}`).textContent = data.quantity;
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
+        }
+
+        function showNotification(message, type = "success") {
+            var notificationsContainer = document.getElementById('notifications-container');
+            
+            var notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+            notification.textContent = message;
+
+            notificationsContainer.appendChild(notification);
+
+            setTimeout(() => {
+                notification.style.opacity = 0;
+                setTimeout(() => {
+                    notification.remove();
+                }, 500);
+            }, 3000);
+        }
+
+        function shareBook(productId, categoryId) {
+            const bookUrl = `${window.location.origin}/categories/${categoryId}/items/${productId}`;
+
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Поделиться книгой',
+                    text: 'Посмотрите эту книгу, она может вам понравиться!',
+                    url: bookUrl,
+                })
+                .then(() => {
+                    console.log('Ссылка успешно отправлена!');
+                })
+                .catch(error => {
+                    console.error('Ошибка при отправке ссылки:', error);
+                });
+            } else {
+                copyToClipboard(bookUrl);
+                showNotification('Ссылка скопирована в буфер обмена!');
+            }
+        }
+
+        function copyToClipboard(text) {
+            const tempInput = document.createElement('input');
+            tempInput.value = text;
+            document.body.appendChild(tempInput);
+
+            tempInput.select();
+            document.execCommand('copy');
+
+            document.body.removeChild(tempInput);
+        }
+
+
+    </script>
+
+</body>
+</html>

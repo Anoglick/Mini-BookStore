@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8);
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+
+            50% {
+                background: rgba(255, 179, 132, 0.8);
+                
+            }
+
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(51, 51, 51, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-bar button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        
+        .left-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-icon,
+        .home-icon {
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+        }
+
+        
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 25px;
+            border: 2px solid white;
+        }
+
+        .profile .username {
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .nav-bar-button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-right: 20px; 
+        }
+
+        .nav-bar-button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        
+        .items-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            
+            gap: 20px;
+            
+            justify-items: center;
+            
+            margin-top: 100px;
+        }
+
+        .items {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 10px;
+            width: 200px;
+            
+            height: 240px;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 1200px) {
+            .items-container {
+                grid-template-columns: repeat(5, minmax(200px, 1fr));
+                
+            }
+        }
+
+        @media (max-width: 1199px) and (min-width: 960px) {
+            .items-container {
+                grid-template-columns: repeat(4, minmax(200px, 1fr));
+                
+            }
+        }
+
+        @media (max-width: 959px) and (min-width: 768px) {
+            .items-container {
+                grid-template-columns: repeat(3, minmax(200px, 1fr));
+                
+            }
+        }
+
+        @media (max-width: 767px) {
+            .items-container {
+                grid-template-columns: repeat(2, minmax(200px, 1fr));
+                
+            }
+        }
+
+        .items img {
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+        }
+
+        .items-name {
+            padding: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        
+        .items:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .edit-icon {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #fff;
+            border: 2px solid #333;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #333;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-icon:hover {
+            background-color: rgba(224, 224, 224, 0.9);
+        }
+    </style>
+    <!-- Подключаем Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <!-- Навигационная панель -->
+    <div class="nav-bar">
+        <!-- Блок с иконками "назад" и "домой" -->
+        <div class="left-icons">
+            <div class="back-icon" onclick="window.history.back();">
+                <i class="fas fa-arrow-left"></i>
+            </div>
+            <div class="home-icon" onclick="window.location.href='/main/';">
+                <i class="fas fa-home"></i>
+            </div>
+        </div>
+        <div>
+            <button id="categories-btn" onclick="window.location.href='/categories';">Категории</button>
+            <button id="delivery-btn">Доставка</button>
+            <button id="cart-btn" onclick="window.location.href='/cart';">Корзина</button>
+        </div>
+
+        <!-- Иконка пользователя справа -->
+        <div class="profile">
+            {% if user.is_authenticated %}
+                <a href="/user/{{ user.id }}">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Picture">
+                </a>
+            {% else %}
+                <a href="/auth/login/">
+                    <button class="nav-bar-button">Войти</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Контейнер для категорий -->
+        <div class="items-container">
+            {% for item in cart_items %}
+            <!-- Пример элемента корзины -->
+            <div class="items" onclick="window.location.href='/categories/{{ item.product_id.category.id }}/items/{{ item.product_id.id }}'">
+                <img src="{{ item.product_id.image }}" alt="{{ item.product_id.title }}">
+                <div class="books-name">{{ item.product_id.title }}</div>
+                <div class="quantity">{{ item.quantity }} шт.</div>
+                <div class="price">{{ item.price }} руб.</div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+</html>

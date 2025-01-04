@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8);
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+            50% {
+                background: rgba(255, 179, 132, 0.8);
+            }
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            z-index: 1;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .form-container h2 {
+            margin-bottom: 20px;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-container input[type="text"].is-invalid,
+        .form-container input[type="password"].is-invalid {
+            border: 1px solid red;
+        }
+
+        .form-container button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            margin-top: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-container button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        .switch-link {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .switch-link a {
+            color: #6a4fbb;
+            text-decoration: none;
+        }
+
+        .switch-link a:hover {
+            text-decoration: underline;
+        }
+
+        .password-hint {
+            font-size: 14px;
+            color: #888;
+            margin-top: 5px;
+        }
+
+        .password-hint.valid {
+            color: green;
+            border: none;
+        }
+
+        .password-hint.invalid {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="form-container">
+        <h2>Зарегистрироваться</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Введите логин" required>
+            <input type="password" name="password1" placeholder="Введите пароль" id="password1" required>
+            <input type="password" name="password2" placeholder="Подтвердите пароль" required>
+
+            <div class="password-hint" id="minLengthHint">Минимум 8 символов</div>
+            <div class="password-hint" id="uppercaseHint">Должна быть хотя бы одна заглавная буква</div>
+            <div class="password-hint" id="digitHint">Должна быть хотя бы одна цифра</div>
+
+            <button type="submit">Зарегистрироваться</button>
+        </form>
+
+        <div class="switch-link">
+            Уже есть аккаунт? <a href="/auth/login/">Войти</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var passwordInput = document.getElementById('password1');
+        var minLengthHint = document.getElementById('minLengthHint');
+        var uppercaseHint = document.getElementById('uppercaseHint');
+        var digitHint = document.getElementById('digitHint');
+
+        var passwordCriteria = {
+            minLength: 8,
+            uppercase: /[A-Z]/,
+            digits: /\d/
+        };
+
+        function validatePassword() {
+            var password = passwordInput.value;
+            var isLengthValid = password.length >= passwordCriteria.minLength;
+            var isUppercaseValid = passwordCriteria.uppercase.test(password);
+            var isDigitValid = passwordCriteria.digits.test(password);
+
+            minLengthHint.classList.toggle('valid', isLengthValid);
+            uppercaseHint.classList.toggle('valid', isUppercaseValid);
+            digitHint.classList.toggle('valid', isDigitValid);
+        }
+
+        passwordInput.addEventListener('input', validatePassword);
+    });
+</script>
+
+</body>
+</html>

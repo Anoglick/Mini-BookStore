@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать категорию</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8);
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+            50% {
+                background: rgba(255, 179, 132, 0.8);
+            }
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(51, 51, 51, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar .back-icon {
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .nav-bar .profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 25px;
+            border: 2px solid white;
+        }
+
+        .nav-bar button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-bar button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        .nav-bar-button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-right: 20px;
+        }
+
+        .nav-bar-button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .category-form {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-group input[type="text"], .form-group input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group input[type="submit"] {
+            background-color: rgba(106, 79, 187, 0.9);
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-group input[type="submit"]:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="back-icon" onclick="window.history.back();">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        
+        <div>
+            <button id="categories-btn" onclick="window.location.href='/categories';">Категории</button>
+            <button id="delivery-btn">Доставка</button>
+            <button id="cart-btn" onclick="window.location.href='/cart';">Корзина</button>
+        </div>
+
+        <div class="profile">
+            {% if user.is_authenticated %}
+                <a href="/user/{{ user.id }}">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Picture">
+                </a>
+            {% else %}
+                <a href="/auth/login/">
+                    <button class="nav-bar-button">Войти</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <form class="category-form" method="POST">
+            {% csrf_token %}
+            <div class="form-title">Редактировать категорию</div>
+            
+            <div class="form-group">
+                <label for="id_slug">Slug:</label>
+                <input type="text" id="id_slug" name="slug" maxlength="50" value="{{ category.slug }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_title">Название:</label>
+                <input type="text" id="id_title" name="title" maxlength="255" value="{{ category.title }}" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="id_image">Изображение:</label>
+                <input type="file" id="id_image" name="image">
+                {% if category.image %}
+                    <p>Текущее изображение: <img src="{{ category.image }}" alt="Category Image" width="100"></p>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <input type="submit" value="Сохранить изменения">
+            </div>
+        </form>
+    </div>
+</body>
+</html>

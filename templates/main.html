@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная страница</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8);
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+            50% {
+                background: rgba(255, 179, 132, 0.8);
+            }
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        .buttons-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            text-align: center;
+        }
+
+        .action-button {
+            background-color: #6A4FBB;
+            color: #fff;
+            padding: 20px 40px;
+            font-size: 18px;
+            margin: 10px 0;
+            width: 250px;
+            height: 60px;
+            cursor: pointer;
+            border: 3px solid #4E3691;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+            border-radius: 6px;
+            text-shadow: 2px 2px 0px #4E3691;
+            box-shadow: 5px 5px 0px #4E3691, 10px 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .action-button:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 3px 3px 0px #4E3691, 7px 7px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .action-button:active {
+            transform: translate(3px, 3px);
+            box-shadow: 2px 2px 0px #4E3691, 5px 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .action-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="buttons-container">
+            <button class="action-button">Главная</button>
+            <div class="action-description">Посмотрите новинки!</div>
+
+            <button class="action-button" onclick="window.location.href='/categories/'">Категории</button>
+            <div class="action-description">Выбрать жанр книги.</div>
+
+            <button class="action-button" onclick="window.location.href='/cart'">Корзина</button>
+            <div class="action-description">Что в вашей корзине?</div>
+        </div>
+    </div>
+</body>
+</html>

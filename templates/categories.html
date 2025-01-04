@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Категории</title>
+    <style>
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background: rgba(106, 79, 187, 0.8); 
+            background-size: cover;
+            background-position: center;
+            animation: backgroundAnimation 10s infinite alternate; 
+        }
+
+        
+        @keyframes backgroundAnimation {
+            0% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+            50% {
+                background: rgba(255, 179, 132, 0.8); 
+            }
+            100% {
+                background: rgba(106, 79, 187, 0.8);
+            }
+        }
+
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            z-index: 1;
+        }
+
+        
+        .left-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .back-icon {
+            font-size: 25px;
+            color: white;
+            cursor: pointer;
+        }
+
+        
+        .nav-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 12px;
+            background-color: rgba(51, 51, 51, 0.8);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-bar div {
+            display: flex;
+            gap: 15px; 
+        }
+
+        .nav-bar button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .nav-bar button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+        
+        
+        .profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            margin-right: 25px;
+            border: 2px solid white;
+        }
+
+        .nav-bar-button {
+            background-color: rgba(106, 79, 187, 0.9);
+            border: none;
+            color: white;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            margin-right: 20px; 
+        }
+
+        .nav-bar-button:hover {
+            background-color: rgba(138, 90, 243, 0.9);
+            box-shadow: 0 4px 10px rgba(138, 90, 243, 0.6);
+        }
+
+        
+        .categories-container {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(200px, 1fr)); 
+            gap: 20px; 
+            justify-items: center; 
+            margin-top: 100px;
+        }
+
+        
+        .category, .add-category {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 10px;
+            width: 200px;
+            height: 260px;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        
+        .category img {
+            width: 100%;
+            height: 65%;
+            object-fit: cover;
+        }
+
+        
+        .category-name {
+            padding: 8px;
+            font-size: 17px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        
+        .category:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .add-category {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 200px;
+            height: 240px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-category .add-icon {
+            font-size: 30px;
+            color: #6a4fbb;
+            text-align: center;
+        }
+
+        
+        .add-category:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        
+        .edit-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            color: #6a4fbb;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .edit-icon:hover {
+            color: #d890f4;
+        }
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="nav-bar">
+        <div class="back-icon" onclick="window.history.back();">
+            <i class="fas fa-arrow-left"></i>
+        </div>
+        
+        <div>
+            <button id="categories-btn" onclick="window.location.href='/categories';">Категории</button>
+            <button id="delivery-btn">Доставка</button>
+            <button id="cart-btn" onclick="window.location.href='/cart';">Корзина</button>
+        </div>
+
+        <div class="profile">
+            {% if user.is_authenticated %}
+                <a href="/user/{{ user.id }}">
+                    <img src="https://www.w3schools.com/w3images/avatar2.png" alt="Profile Picture">
+                </a>
+            {% else %}
+                <a href="/auth/login/">
+                    <button class="nav-bar-button">Войти</button>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="categories-container" id="categories-container"></div>
+
+        <script>
+            window.addEventListener('DOMContentLoaded', function() {
+                fetchCategories();
+            });
+
+            function fetchCategories() {
+                fetch('/api/categories/')
+                    .then(response => response.json())
+                    .then(categories => {
+                        const categoriesContainer = document.getElementById('categories-container');
+                        categoriesContainer.innerHTML = '';
+                        
+                        categories.forEach(category => {
+                            const categoryElement = document.createElement('div');
+                            categoryElement.classList.add('category');
+                            categoryElement.innerHTML = `
+                                <img src="https://i.pinimg.com/736x/3a/0c/9f/3a0c9f94bc5b671de539935368e75565.jpg" alt="${category.title}">
+                                <div class="category-name">${category.title}</div>
+                                {% if user.is_authenticated and user.is_staff %}
+                                <div class="edit-icon" onclick="editCategory(${category.id}, event)">
+                                    <i class="fas fa-edit"></i>
+                                </div>
+                                {% endif %}
+                            `;
+                            
+                            categoryElement.onclick = (event) => {
+                                if (!event.target.closest('.edit-icon')) {
+                                    window.location.href = `/categories/${category.id}/items`;
+                                }
+                            };
+                            
+                            categoriesContainer.appendChild(categoryElement);
+                        });
+
+                        
+                        {% if user.is_authenticated and user.is_staff %}
+                            const addCategoryElement = document.createElement('div');
+                            addCategoryElement.classList.add('add-category');
+                            addCategoryElement.onclick = () => window.location.href = '/categories/add';
+                            addCategoryElement.innerHTML = `
+                                <div class="add-icon">
+                                    <i class="fas fa-plus"></i>
+                                </div>
+                            `;
+                            categoriesContainer.appendChild(addCategoryElement);
+                        {% endif %}
+                    })
+                    .catch(error => console.error('Error fetching categories:', error));
+            }
+
+            function editCategory(categoryId, event) {
+                event.stopPropagation();
+                window.location.href = `/categories/${categoryId}/edit`;
+            }
+
+        </script>
+    </div>
+</body>
+</html>
